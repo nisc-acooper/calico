@@ -47,6 +47,11 @@ type Config struct {
 	// Default is kube-flannel-ds
 	FlannelDaemonsetName string `default:"kube-flannel-ds" split_words:"true"`
 
+	// Name of namespace the flannel daemonset resides in
+	// In flannel 0.19+, this changed to flannel-system from kube-system
+	// Default is kube-system
+	FlannelDaemonsetNamespace string `default:"kube-system" split_words:"true"`
+
 	// FlannelMTU is the mtu used by flannel vxlan tunnel interface.
 	// This config item is auto detected from /run/flannel/subnet.env.
 	FlannelMTU int `default:"0" split_words:"true"`
@@ -164,6 +169,11 @@ func (c *Config) ValidateFlannelConfig() error {
 	// Check Flannel daemonset name.
 	if c.FlannelDaemonsetName == "" {
 		return fmt.Errorf("Missing FlannelDaemonsetName config")
+	}
+	
+	// Check Flannel daemonset namespace.
+	if c.FlannelDaemonsetNamespace == "" {
+		return fmt.Errorf("Missing FlannelDaemonsetNamespace config")
 	}
 
 	// Check Flannel MTU.

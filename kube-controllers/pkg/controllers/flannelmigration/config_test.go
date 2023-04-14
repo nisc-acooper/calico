@@ -28,6 +28,7 @@ var _ = Describe("flannel migration config", func() {
 	// required by flannel migration controller.
 	unsetEnv := func() {
 		os.Unsetenv("FLANNEL_DAEMONSET_NAME")
+		os.Unsetenv("FLANNEL_DAEMONSET_NAMESPACE")
 		os.Unsetenv("FLANNEL_SUBNET_LEN")
 		os.Unsetenv("FLANNEL_IPV6_SUBNET_LEN")
 		os.Unsetenv("FLANNEL_ANNOTATION_PREFIX")
@@ -42,6 +43,7 @@ var _ = Describe("flannel migration config", func() {
 	// setEnv() function that sets environment variables.
 	setEnv := func() {
 		os.Setenv("FLANNEL_DAEMONSET_NAME", "flannel-daemonset")
+		os.Setenv("FLANNEL_DAEMONSET_NAMESPACE", "kube-system")
 		os.Setenv("FLANNEL_SUBNET_LEN", "25")
 		os.Setenv("FLANNEL_ANNOTATION_PREFIX", "flannel-prefix")
 		os.Setenv("FLANNEL_VNI", "3")
@@ -80,6 +82,7 @@ var _ = Describe("flannel migration config", func() {
 		Expect(config.FlannelMTU).To(Equal(0))
 		Expect(config.FlannelIPMasq).To(Equal(true))
 		Expect(config.FlannelDaemonsetName).To(Equal("kube-flannel-ds"))
+		Expect(config.FlannelDaemonsetNamespace).To(Equal("kube-system"))
 		Expect(config.FlannelSubnetLen).To(Equal(24))
 		Expect(config.FlannelIpv6SubnetLen).To(Equal(64))
 		Expect(config.FlannelAnnotationPrefix).To(Equal("flannel.alpha.coreos.com"))
@@ -107,6 +110,7 @@ var _ = Describe("flannel migration config", func() {
 		Expect(config.FlannelMTU).To(Equal(8951))
 		Expect(config.FlannelIPMasq).To(Equal(false))
 		Expect(config.FlannelDaemonsetName).To(Equal("flannel-daemonset"))
+		Expect(config.FlannelDaemonsetNamespace).To(Equal("kube-system"))
 		Expect(config.FlannelSubnetLen).To(Equal(25))
 		Expect(config.FlannelIpv6SubnetLen).To(Equal(64))
 		Expect(config.FlannelAnnotationPrefix).To(Equal("flannel-prefix"))
@@ -135,6 +139,7 @@ var _ = Describe("flannel migration config", func() {
 		Expect(config.FlannelMTU).To(Equal(8951))
 		Expect(config.FlannelIPMasq).To(Equal(false))
 		Expect(config.FlannelDaemonsetName).To(Equal("flannel-daemonset"))
+		Expect(config.FlannelDaemonsetNamespace).To(Equal("kube-system"))
 		Expect(config.FlannelSubnetLen).To(Equal(25))
 		Expect(config.FlannelIpv6SubnetLen).To(Equal(66))
 		Expect(config.FlannelAnnotationPrefix).To(Equal("flannel-prefix"))
